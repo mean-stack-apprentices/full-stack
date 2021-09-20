@@ -1,3 +1,9 @@
+## MY STUFF
+/node_modules/
+/dist/
+
+/src/client/node_modules/
+
 # Logs
 logs
 *.log
