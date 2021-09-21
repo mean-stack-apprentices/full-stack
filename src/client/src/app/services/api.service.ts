@@ -5,11 +5,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ApiService {
-
+  baseUrl:string = 'https://localhost:3501/';
   constructor(private http: HttpClient) 
   { }
 
   get<T>(resourceName: string) {
-    return this.http.get<T>('https://localhost:3501/'+ resourceName);
+    return this.http.get<T>(this.baseUrl + resourceName);
   }
 }
