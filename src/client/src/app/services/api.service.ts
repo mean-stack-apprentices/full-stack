@@ -10,6 +10,6 @@ export class ApiService {
   { }
 
   get<T>(resourceName: string) {
-    return this.http.get<T>('https://jsonplaceholder.typicode.com/'+ resourceName);
+    return this.http.get<T>('https://localhost:3501/'+ resourceName);
   }
 }
