@@ -1,4 +1,5 @@
-<form>
-    <input type="text" placeholder="name">
-    <input type="text" placeholder="username">
+<form [formGroup] = 'addUser'>
+    <input type="text" formControlName='name' placeholder="name">
+    <input type="text" formControlName='username' placeholder="username">
+    <button [disabled]='addUser.invalid'>addUser</button>
 </form>
