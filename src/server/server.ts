@@ -2,7 +2,12 @@ import express from 'express';
 import cors from 'cors';
 import fs from 'fs';
 import path from 'path';
- 
+
+import mongoose from 'mongoose';
+mongoose.connect('mongodb://localhost:27017/test').then(() => {
+      console.log('connected to db');
+  }).catch(err => console.log(err, 'connecting to db'))
+
 const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
@@ -14,6 +19,9 @@ app.get('/', function(req, res) {
    res.json({message:'test'});
 });
 
+app.get('/user', function(req, res) {
+    res.json({message:'test'});
+ });
 app.get('/users', function(req,res){
     res.sendFile(path.join(__dirname, 'users.json'));
 });
@@ -22,3 +30,14 @@ app.get('/users', function(req,res){
 app.listen(PORT, function(){
     console.log( `starting at localhost http://localhost: ${PORT}`);
 })
+
+
+
+
+
+
+// mongoose
+// .connect('mongodb://localhost:27017/test')
+// .then(() => {
+//       console.log('connected to db');
+//   }).catch(err => console.log(err, 'connecting to db'))
