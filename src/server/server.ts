@@ -18,6 +18,7 @@ mongoose.connect('mongodb://localhost:27017/test')
 
 
 app.use(cors());
+app.use(express.json());
 
 
 app.get('/', function(req, res) {
@@ -34,6 +35,20 @@ app.get('/users', function(req,res){
     })
 });
 
+app.post('/create-user', function (req,res){
+    const {name, email} = req.body;
+    const user = new UserModel({
+        name, 
+        email,
+    });
+    user.save()
+    .then(data => {
+        res.json({data});
+    }).catch(error =>{
+        res.status(501);
+        res.json({errors:error})
+    })
+});
 
 app.listen(PORT, function(){
     console.log( `starting at localhost http://localhost: ${PORT}`);
