@@ -17,6 +17,7 @@ mongoose.connect('mongodb://localhost:27017/test')
 
 
 app.use(cors());
+app.use(express.json());
 
 
 app.get('/', function(req, res) {
@@ -28,7 +29,22 @@ app.get('/users', function(req,res){
     .then(users => res.json({data: users}))
     .catch(err => {
         res.status(501)
-        res.json({errors: err})
+        res.json({errors: err});
+    })
+});
+app.post('/create-user', function(req,res){
+    const {name, email} = req.body;
+    const user = new UserModel({
+        name,
+        email,
+    });
+    user.save()
+    .then((data) => {
+        res.json({data});
+    })
+    .catch(err => {
+        res.status(501);
+        res.json({errors: err});
     })
 });
 
