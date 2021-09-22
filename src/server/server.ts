@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+import { UserModel } from './schemas/user.schema';
 
 const app = express();
 const __dirname = path.resolve();
@@ -14,8 +15,29 @@ app.get('/', function(req, res) {
 });
 
 app.get('/users', function(req,res){
-    res.sendFile(path.join(__dirname, 'users.json'));
+    UserModel.find().then( users => {
+        console.log('found users', users);
+        res.json({data: users})
+    })
 });
+
+
+app.get('/create-user', function(req,res){
+const user = new UserModel({
+    id: 1,
+    name: 'Leanne Graham',
+    username: 'Bret',
+    email: 'Sincere@april.biz'
+});
+
+user.save().then(user => {
+    console.log(user, 'saved');
+    res.json({data: user});
+})
+});
+// app.get('/users', function(req,res){
+//     res.sendFile(path.join(__dirname, 'users.json'));
+// });
 
 
 app.listen(PORT, function(){
