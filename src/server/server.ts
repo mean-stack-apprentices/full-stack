@@ -32,6 +32,23 @@ app.get('/users', function(req,res){
     })
 });
 
+app.post('/create-user', function(req,res){
+    const {name,email} = req.body;
+    const user = new UserModel({
+        name,
+        email,
+    });
+    
+    user.save()
+    .then((data) => {
+        res.json({data});
+    })
+    .catch(err => {
+        res.status(501)
+        res.json({errors: err})
+    })
+});
+
 
 app.listen(PORT, function(){
     console.log( `starting at localhost http://localhost: ${PORT}`);
