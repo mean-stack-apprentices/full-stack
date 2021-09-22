@@ -1,10 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import fs from 'fs';
 import path from 'path';
 
 import mongoose from 'mongoose';
-import { UserModel } from './schemas/user.schema.js';
+import { UserModel, User } from './schemas/user.schema.js';
 
  mongoose.connect('mongodb://localhost:27017/test').then(() => {
       console.log('connected to db');
@@ -15,7 +14,9 @@ import { UserModel } from './schemas/user.schema.js';
   const __dirname = path.resolve();
   const PORT = 3501;
   
+
   app.use(cors());
+  app.use(express.json())
   
   app.get('/create-user', function (req, res) {
     const user = new UserModel({
@@ -29,13 +30,21 @@ import { UserModel } from './schemas/user.schema.js';
        });
       
 app.post('/create-user',function(req,res){
-    const users = JSON.parse(fs.readFileSync(path.join(__dirname,'mongodb://localhost:27017/test' ), 'utf8'));
-    users.push(req.body);
-    fs.writeFileSync(path.join(__dirname, 'mongodb://localhost:27017/test'), JSON.stringify(users))
-    res.sendFile(path.join(__dirname, 'mongodb://localhost:27017/test'));
+   const newUser = new UserModel({
+     email: req.body.email,
+     name: req.body.name,
+   });
 
+   newUser.save()
+   .then(user => {
+     res.json({data: user});
+   })
+   .catch((err) => {
+    res.status(404);
+    res.json({error: err})
+  })
 
-    });
+});
  
 app.get('/', function(req, res) {
    res.json({message:'test'});
@@ -46,7 +55,14 @@ app.get('/', function(req, res) {
 //  });
 
 app.get('/users', function(req,res){
-    res.sendFile(path.join(__dirname, 'mongodb://localhost:27017/test'));
+    UserModel.find()
+    .then((users) => {
+      res.json(users);
+    })
+    .catch((err) => {
+      res.status(404);
+      res.json({error: err})
+    })
 });
 
 

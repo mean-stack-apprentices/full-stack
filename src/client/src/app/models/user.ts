@@ -1,8 +1,8 @@
 export class User {
     "id": 1;
-    "name": "Leanne Graham";
+    "name": string;
     "username": "Bret";
-    "email": "Sincere@april.biz";
+    "email": string;
     "address": {
       "street": "Kulas Light",
       "suite": "Apt. 556",

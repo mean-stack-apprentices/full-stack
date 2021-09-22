@@ -12,7 +12,7 @@ export class AddUserComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  addUsers(input: HTMLInputElement) {
+  addUser(input: HTMLInputElement) {
     this.userService.addUser(input.value).subscribe()
      }
 

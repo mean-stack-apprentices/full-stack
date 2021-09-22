@@ -21,10 +21,9 @@ export class UserService {
 
   addUser(value: string){
     const user =new User();
-    const email =new email();
     user.name = value;
     user.email = value;
-   return  this.users$ = this.api.post<User[], User> ('Users', user);
+   return this.api.post<User[], User> ('create-user', user);
   }
 
 }
