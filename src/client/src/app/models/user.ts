@@ -1,7 +1,7 @@
 export class User {
     "id": 1;
     "name": "Leanne Graham";
-    "username": "Bret";
+    "username": string;
     "email": "Sincere@april.biz";
     "address": {
         "street": "Kulas Light",
