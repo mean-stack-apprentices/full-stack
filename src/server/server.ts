@@ -8,15 +8,6 @@ const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
 
-// const adminUser = new UserModel({name: 'admin', username:'admin'});
-// adminUser.save(err => {
-//     if (err) {
-//         throw new Error('ouch.. admin aint save:/')
-//     } else {
-//         console.log('admin added to users')
-//     }
-// })
-
 app.use(cors());
 
 app.get('/', function(req, res) {
@@ -24,6 +15,11 @@ app.get('/', function(req, res) {
 });
 app.get('/users', function(req,res) {
     UserModel.find().then(users => res.json(users))
+});
+
+app.post('/add-user', function(req,res) {
+    const newUser = new UserModel(req.body);
+    res.json(newUser);
 });
 
 app.listen(PORT, function(){
