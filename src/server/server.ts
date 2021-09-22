@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+import fs from 'fs';
 import mongoose from 'mongoose';
 import { UserModel } from './schemas/user.schema.js';
 
@@ -34,21 +35,36 @@ app.get('/create-user', function (req, res) {
   
   });
 
-  app.get('/create-user', function (req, res) {
-    const user = new UserModel({
-      name: 'sol',
-      email: 'solomon@bitwise.com'
+  // app.get('/create-user', function (req, res) {
+  //   const user = new UserModel({
+  //     name: 'sol',
+  //     email: 'solomon@bitwise.com'
     
-    });
+  //   });
 
     user.save().then(user => {
       console.log(user, 'saved')
       res.json({ data: user });
     })
   });
+  app.post('/create-users', function (req, res) {
+    console.log('posted', req.body);
+  
+    const users = JSON.parse(fs.readFileSync(path.join(__dirname, 'mongodb://localhost:27017/test'), 'utf8'));
+    
+    users.push(req.body);
+    fs.writeFileSync(path.join(__dirname, 'users.json'), JSON.stringify(users))
+  
+    
+    res.sendFile(path.join(__dirname, 'users.json'));
+     
+  });
 
 
   app.listen(PORT, function () {
     console.log(`starting at localhost http://localhost: ${PORT}`);
   })
-})
+
+
+
+
