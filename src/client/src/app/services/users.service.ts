@@ -12,12 +12,13 @@ export class UsersService {
     Observer.next([])
   });
   constructor(private apiService: ApiService) {
-  
+    this.getUsers();
    }
 
-  
   getUsers() {
    this.users$= this.apiService.get<User[]>('users')
   }
+
  
 }
+ 
