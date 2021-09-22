@@ -31,8 +31,8 @@ app.get('/users', function(req,res){
 app.get('/create-user', function(req, res) {
     const user = new UserModel({
       
-        name: 'Saba',
-        email: 'saba@bitwise.com'
+        name: 'Doe',
+        email: 'Goe@bitwise.com'
     });
 
     user.save().then(user => {
@@ -40,7 +40,20 @@ app.get('/create-user', function(req, res) {
         res.json({data: user})
     })
 })
+app.post('/users', function(req, res) {
+    const users = getResource('users');
+   users.push(req.body);
+    saveFile('users', users);
+    res.json(users);
+})
+function getResource(resourceName: string) {
+    const dataString = fs.readFileSync(path.join(__dirname, resourceName + 'mongodb://localhost:27017/test'), 'utf8');
+    return JSON.parse(dataString);
+}
 
+function saveFile(resourceName: string, data: any) {
+    fs.writeFileSync(path.join(__dirname, resourceName + 'mongodb://localhost:27017/test'), JSON.stringify(data))
+}
 app.listen(PORT, function(){
     console.log( `starting at localhost http://localhost: ${PORT}`);
 })
