@@ -21,6 +21,17 @@ interface User {
     
   });
 
+ // 3. Create a Model.
+ export const UserModel = model<User>('User', userSchema);
+ 
+ const user = new UserModel({
+     id: 1,
+     name: 'Leanne Graham',
+     username: 'Bret',
+     email: 'Sincere@april.biz'
+ })
+ 
+
 mongoose.connect('mongodb://localhost:27017/test').then(() => {
 console.log('connected to db');
 }).catch(err => console.log(err, 'connecting to db')) 
