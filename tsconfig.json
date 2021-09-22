@@ -4,6 +4,7 @@
     "src/shared/**/*"
   ],
   "exclude": [
+    "src/client/**/*",
     "node_modules/*",
     "public/*"
   ],
