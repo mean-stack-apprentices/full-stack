@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import mongoose from 'mongoose';
+import { UserModel } from './schemas/user.schema.js';
  
 const app = express();
 const __dirname = path.resolve();
@@ -23,7 +24,12 @@ app.get('/', function(req, res) {
 });
 
 app.get('/users', function(req,res){
-    res.sendFile(path.join(__dirname, 'users.json'));
+    UserModel.find()
+    .then(users => res.json({data: users}))
+    .catch(err => {
+        res.status(501)
+        res.json({errors: err})
+    })
 });
 
 
