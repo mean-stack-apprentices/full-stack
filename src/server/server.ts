@@ -3,7 +3,7 @@ import cors from 'cors';
 import path from 'path';
 import mongoose from 'mongoose';
 import { UserModel } from './schemas/user.schema.js';
- 
+import { PostModel } from './schemas/post.schema.js';
 const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
@@ -24,6 +24,15 @@ app.get('/', function(req, res) {
    res.json({message:'test'});
 });
 
+app.get('/posts', function(req,res){
+    PostModel.find()
+    .then(data => res.json({data}))
+    .catch(err => {
+        res.status(501)
+        res.json({errors: err});
+    })
+});
+
 app.get('/users', function(req,res){
     UserModel.find()
     .then(users => res.json({data: users}))
@@ -39,6 +48,22 @@ app.post('/create-user', function(req,res){
         email,
     });
     user.save()
+    .then((data) => {
+        res.json({data});
+    })
+    .catch(err => {
+        res.status(501);
+        res.json({errors: err});
+    })
+});
+
+app.post('/create-post', function(req,res){
+    const {title, body} = req.body;
+    const post = new PostModel({
+        title,
+        body,
+    });
+    post.save()
     .then((data) => {
         res.json({data});
     })
