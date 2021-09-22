@@ -12,15 +12,26 @@ const PORT = 3501;
 
 app.use(cors());
 
+app.get('/create-user', function(req, res){
+    const user = new UserModel({
+        name: 'kim',
+        email: 'kim392@gmail.com'
+    });
 
-const user = new UserModel({
-    name: 'aman',
-    email: 'amankaur212@gmail.com'
-});
-
-user.save().then(user => {
-    console.log(user, 'saved');
+    // user.save().then(userr => {
+    //     console.log(userr, 'saved');
+    //     res.json({data: userr})
+    // })
 })
+
+// const user = new UserModel({
+//     name: 'kim',
+//     email: 'kim392@gmail.com'
+// });
+
+// user.save().then(user => {
+//     console.log(user, 'saved');
+// })
 
 
 
