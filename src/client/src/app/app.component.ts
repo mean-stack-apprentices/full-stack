@@ -24,7 +24,7 @@ export class AppComponent {
     });
   }
 
-  postUser() {
+  postUser(nam:string, eml: string) {
 
   }
 }
