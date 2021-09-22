@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 
 import mongoose from 'mongoose';
-import { UserModel } from './schemas/user.schema';
+import { UserModel } from './schemas/user.schema.js';
 mongoose.connect('mongodb://localhost:27017/test').then(() => {
       console.log('connected to db');
   }).catch(err => console.log(err, 'connecting to db'))
@@ -20,9 +20,20 @@ mongoose.connect('mongodb://localhost:27017/test').then(() => {
     const user = new UserModel({
       name: 'Lielt',
       email: 'lee@bitwise.com'
-    
-    });
+       });
+       app.get('create-user', function(req,res) {
+        const user = new UserModel({
+            name:'lee',
+            email:'lee@aaa.com'
+        });
+       user.save().then(user => {
+        console.log(user, 'saved')
+        res.json({ data: user });
+      });
+  });
 
+ 
+  })
 app.get('/', function(req, res) {
    res.json({message:'test'});
 });
@@ -44,8 +55,4 @@ app.listen(PORT, function(){
 
 
 
-// mongoose
-// .connect('mongodb://localhost:27017/test')
-// .then(() => {
-//       console.log('connected to db');
-//   }).catch(err => console.log(err, 'connecting to db'))
+
