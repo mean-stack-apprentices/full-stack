@@ -1,0 +1,16 @@
+<h3>Posts</h3>
+
+<p>Title:</p>
+<input type="text" [(ngModel)]="title" placeholder="Enter a title">
+<br>
+<p>Subject:</p>
+<textarea [(ngModel)]="body" placeholder="Enter text here" cols="30" rows="10"></textarea>
+<br>
+<button (click)=addPost()>Add Post</button>
+
+<div>
+  <ul>
+    <!-- <li *ngFor="let post of posts$ | async"></li> -->
+</ul>
+</div>
+
