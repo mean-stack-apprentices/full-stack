@@ -33,7 +33,7 @@ import { PostModel } from './schemas/post.schema.js';
   app.get('/create-post', function (req, res) {
     const post = new PostModel({
       title: 'first meanstack project',
-      body:'',
+      body:'test',
     });
       post.save().then(post => {
         console.log(post, 'saved')
@@ -85,11 +85,10 @@ app.post('/create-user',function(req,res){
 
 
 app.post('/create-post', function (req, res) {
-  const { title, body } = req.body;
   const post = new PostModel({
-    title,
-    body,
-  });
+    title: req.body.title,
+    body: req.body.body,
+   });
 
   post.save()
   .then(post => {
