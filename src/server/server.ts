@@ -72,8 +72,7 @@ app.post('/create-post', function (req,res){
     .then(data => {
         res.json({data});
     }).catch(error =>{
-        res.status(501);
-        res.json({errors:error})
+        res.status(501).json({errors:error})
     })
 });
 
