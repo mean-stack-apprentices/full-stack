@@ -28,7 +28,7 @@ app.get('/posts', function(req, res) {
     res.json({message: 'got /posts'})
 })
 
-app.post('/addUser', function(req,res) {
+app.post('/create-user', function(req,res) {
     const newUser = new UserModel(req.body);
     newUser.save(err => {
         if (err) {
@@ -39,7 +39,7 @@ app.post('/addUser', function(req,res) {
     })
     res.json(req.body);
 });
-app.post('/addPost', function(req, res) {
+app.post('/create-post', function(req, res) {
     const newPost =  new PostModel(req.body)
     newPost.save(err => {
         if (err) {
