@@ -1,21 +1,76 @@
 import express from 'express';
 import cors from 'cors';
-import fs from 'fs';
 import path from 'path';
- 
+import mongoose from 'mongoose';
+import { UserModel } from './schemas/user.schema.js';
+import { PostModel } from './schemas/post.schema.js';
 const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
 
+mongoose.connect('mongodb://localhost:27017/test')
+.then(() => {
+    console.log('Connected to DB Successfully');
+})
+.catch(err => console.log('Failed to Connect to DB', err))
+
+
+
 app.use(cors());
+app.use(express.json());
 
 
 app.get('/', function(req, res) {
    res.json({message:'test'});
 });
 
+app.get('/posts', function(req,res){
+    PostModel.find()
+    .then(data => res.json({data}))
+    .catch(err => {
+        res.status(501)
+        res.json({errors: err});
+    })
+});
+
 app.get('/users', function(req,res){
-    res.sendFile(path.join(__dirname, 'users.json'));
+    UserModel.find()
+    .then(users => res.json({data: users}))
+    .catch(err => {
+        res.status(501)
+        res.json({errors: err});
+    })
+});
+app.post('/create-user', function(req,res){
+    const {name, email} = req.body;
+    const user = new UserModel({
+        name,
+        email,
+    });
+    user.save()
+    .then((data) => {
+        res.json({data});
+    })
+    .catch(err => {
+        res.status(501);
+        res.json({errors: err});
+    })
+});
+
+app.post('/create-post', function(req,res){
+    const {title, body} = req.body;
+    const post = new PostModel({
+        title,
+        body,
+    });
+    post.save()
+    .then((data) => {
+        res.json({data});
+    })
+    .catch(err => {
+        res.status(501);
+        res.json({errors: err});
+    })
 });
 
 
