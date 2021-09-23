@@ -1,4 +1,6 @@
 import { UserModel } from './schema/user.schema.js';
+import { PostModel } from './schema/post.schema.js';
+ 
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -49,6 +51,32 @@ app.post('/create-user', function (req,res){
         res.json({errors:error})
     })
 });
+
+app.get('/posts', function(req,res){
+    PostModel.find()
+    .then(posts => {
+        res.json({data:posts})
+    }).catch(err => {
+        res.status(501);
+        res.json({errors: err})
+    })
+});
+
+app.post('/create-post', function (req,res){
+    const {title, body} = req.body;
+    const post = new PostModel({
+       title,
+       body,
+    });
+    post.save()
+    .then(data => {
+        res.json({data});
+    }).catch(error =>{
+        res.status(501);
+        res.json({errors:error})
+    })
+});
+
 
 app.listen(PORT, function(){
     console.log( `starting at localhost http://localhost: ${PORT}`);
