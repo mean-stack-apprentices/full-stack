@@ -79,5 +79,5 @@ app.post('/create-post', function (req,res){
 
 
 app.listen(PORT, function(){
-    console.log( `starting at localhost http://localhost: ${PORT}`);
+    console.log( `starting at localhost http://localhost:${PORT}`);
 })
