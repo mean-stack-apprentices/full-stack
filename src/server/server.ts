@@ -1,7 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+import mongoose from 'mongoose';
 import { UserModel } from './schemas/user.schema.js'
+
+mongoose.connect('mongodb://localhost:27017/full-stack')
+.then(() => {
+    console.log('conneted to db')
+}).catch(err => console.log(err, 'error connecting to db'))
 
 const app = express();
 const __dirname = path.resolve();
