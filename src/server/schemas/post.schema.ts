@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-interface Post {
+export interface Post {
     title: string;
     body: string;
   
