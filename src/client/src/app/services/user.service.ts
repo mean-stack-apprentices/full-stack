@@ -12,4 +12,7 @@ export class UserService {
   getUsers() {
     return this.api.get<User[]>('users')
   }
+  postUsers(user: User) {
+    return this.api.post<User>('addUser', user)
+  }
 }
