@@ -28,8 +28,11 @@ app.get('/users', function(req,res){
         console.log('found users', users);
         res.json({data: users});
     }).catch( err => {
-        res.status(501);
-        res.json({errors: err})
+        //res.status(501);
+        //res.json({errors: err});
+        //It can be written as: 
+        res.status(501).json({errors: err});
+        
     })
 });
 
@@ -42,11 +45,12 @@ app.post('/create-user', function(req,res){
     });
     user.save()
     .then((data) => {
+        console.log(data, 'saved');
         res.json({data});
     })
     .catch(err => {
-        res.json(501);
-        res.json({errors: err})
+        res.status(501).json({errors: err});
+        //res.json({errors: err})
     })
 });
 
@@ -56,23 +60,3 @@ app.listen(PORT, function(){
 })
 
 
-// app.get('/create-user', function(req, res){
-//     const newUser = {
-//         name: '', email: ''
-//     }
-//     const user = new UserModel({newUser});
-
-//     // user.save().then(userr => {
-//     //     console.log(userr, 'saved');
-//     //     res.json({data: userr})
-//     // })
-// })
-
-// // const user = new UserModel({
-// //     name: 'kim',
-// //     email: 'kim392@gmail.com'
-// // });
-
-// // user.save().then(user => {
-// //     console.log(user, 'saved');
-// // })
