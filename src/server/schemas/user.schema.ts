@@ -1,7 +1,6 @@
-
 import mongoose from 'mongoose';
 const {Schema, model} = mongoose;
-interface User {
+export interface User {
     name: string;
     email: string;
     avatar?: string;
