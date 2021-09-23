@@ -45,7 +45,7 @@ app.post('/addPost', function(req, res) {
         if (err) {
             throw new Error('ouch.. newPost aint save :/')
         } else {
-            console.log('new user');
+            console.log('new post');
         }
     });
     res.json(req.body);
