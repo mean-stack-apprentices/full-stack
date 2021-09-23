@@ -47,7 +47,8 @@ app.post('/addPost', function(req, res) {
         } else {
             console.log('new user');
         }
-    })
+    });
+    res.json(req.body);
 })
 
 app.listen(PORT, function(){
