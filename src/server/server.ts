@@ -3,6 +3,7 @@ import cors from 'cors';
 import path from 'path';
 import mongoose from 'mongoose';
 import { UserModel } from './schemas/user.schema.js'
+import { PostModel } from './schemas/post.schema.js';
 
 mongoose.connect('mongodb://localhost:27017/full-stack')
 .then(() => {
@@ -23,6 +24,9 @@ app.get('/users', function(req,res) {
     UserModel.find().then(users => res.json(users))
     .catch(err => {throw new Error ('server aint receive users')})
 });
+app.get('/posts', function(req, res) {
+    res.json({message: 'got /posts'})
+})
 
 app.post('/addUser', function(req,res) {
     const newUser = new UserModel(req.body);
@@ -35,6 +39,16 @@ app.post('/addUser', function(req,res) {
     })
     res.json(req.body);
 });
+app.post('/addPost', function(req, res) {
+    const newPost =  new PostModel(req.body)
+    newPost.save(err => {
+        if (err) {
+            throw new Error('ouch.. newPost aint save :/')
+        } else {
+            console.log('new user');
+        }
+    })
+})
 
 app.listen(PORT, function(){
     console.log( `starting at localhost http://localhost:${PORT}`);
