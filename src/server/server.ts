@@ -23,14 +23,10 @@ app.get('/', function(req, res) {
 });
 
 app.get('/users', function(req,res){
-    //res.sendFile(path.join(__dirname, 'users.json'));
     UserModel.find().then(users => {
         console.log('found users', users);
         res.json({data: users});
     }).catch( err => {
-        //res.status(501);
-        //res.json({errors: err});
-        //It can be written as: 
         res.status(501).json({errors: err});
         
     })
