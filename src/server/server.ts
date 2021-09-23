@@ -3,6 +3,7 @@ import cors from 'cors';
 import path from 'path';
 import mongoose from 'mongoose';
 import { UserModel } from './schemas/user.schema.js';
+import { PostModel } from './schemas/post.schema.js';
 
  
 const app = express();
@@ -22,6 +23,7 @@ app.get('/', function(req, res) {
    res.json({message:'test'});
 });
 
+//Users
 app.get('/users', function(req,res){
     UserModel.find().then(users => {
         console.log('found users', users);
@@ -46,7 +48,32 @@ app.post('/create-user', function(req,res){
     })
     .catch(err => {
         res.status(501).json({errors: err});
-        //res.json({errors: err})
+    })
+});
+// Posts
+app.get('/post', function(req,res){
+    PostModel.find().then(posts => {
+        console.log('found posts', posts);
+        res.json({data: posts});
+    }).catch( err => {
+        res.status(501).json({errors: err});
+        
+    })
+});
+
+app.post('/create-post', function(req,res){
+    const {body, title} = req.body;
+    const post = new PostModel({
+        body,
+        title
+    });
+    post.save()
+    .then((data) => {
+        console.log(data, 'post saved');
+        res.json({data});
+    })
+    .catch(err => {
+        res.status(501).json({errors: err});
     })
 });
 
