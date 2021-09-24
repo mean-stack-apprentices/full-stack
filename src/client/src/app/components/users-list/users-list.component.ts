@@ -10,6 +10,7 @@ import { User } from '../../../../../shared/models/user.model';
 })
 export class UsersListComponent implements OnInit {
   users$: Observable<User[]>
+  updatedName?:string
   constructor(private userService: UserService) {
     this.users$ = this.getUsers()
   }
@@ -20,5 +21,10 @@ export class UsersListComponent implements OnInit {
   getUsers() {
     return this.userService.getUsers()
   }
-
+  updateUsers(id: any, name:string) {
+    return this.userService.updateById({_id: id, updatedName: name}).subscribe()
+  }
+  deleteUser(id:any) {
+    return this.userService.deleteUser(id).subscribe()
+  }
 }

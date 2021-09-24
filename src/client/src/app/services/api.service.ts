@@ -16,4 +16,7 @@ export class ApiService {
   post<T>(resourceName: string, data: Postable) {
     return this.http.post<T>(this.baseUrl + resourceName, data);
   }
+  delete<T>(resourceName: string) {
+    return this.http.delete<T>(this.baseUrl + resourceName);
+  }
 }
