@@ -74,7 +74,14 @@ app.post('/create-post', function(req,res){
         res.json({errors: err});
     })
 });
-
+app.delete('/delete-user/:id', function (req, res) {
+  const _id = req.params.id;
+  UserModel.findByIdAndDelete(_id).then(data => {
+    res.json({
+      data
+    })
+  })
+})
 
 app.listen(PORT, function(){
     console.log( `starting at localhost http://localhost:${PORT}`);
