@@ -1,4 +1,3 @@
-
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -9,8 +8,8 @@ import mongoose from 'mongoose';
 const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
-
 mongoose.connect('mongodb://localhost:27017/test')
+
 .then(() => {
     console.log('Connected to DB Successfully');
 })
@@ -50,6 +49,17 @@ app.post('/create-user', function(req,res){
         email,
     });
     user.save()
+    .then((data) => {
+        res.json({data});
+    })
+    .catch(err => {
+        res.status(501);
+        res.json({errors: err});
+    })
+});
+app.post('/update-user', function(req,res){
+    const {_id, updatedName,} = req.body;
+    UserModel.findByIdAndUpdate(_id, {$set: {name: updatedName}})
     .then((data) => {
         res.json({data});
     })
