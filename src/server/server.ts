@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
-mongoose.connect('mongodb://localhost:27017/test')
+mongoose.connect('mongodb://localhost:27017/full-stack')
 
 .then(() => {
     console.log('Connected to DB Successfully');
@@ -65,6 +65,14 @@ app.post('/update-user', function(req,res){
     })
     .catch(err => {
         res.status(501);
+        res.json({errors: err});
+    })
+});
+app.delete('/delete-user/:id', function(req,res){
+    UserModel.findByIdAndDelete(req.params.id)
+    .then(data => res.json(data))
+    .catch(err => {
+        res.status(501)
         res.json({errors: err});
     })
 });
