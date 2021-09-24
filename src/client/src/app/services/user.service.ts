@@ -15,4 +15,7 @@ export class UserService {
   postUsers(user: User) {
     return this.api.post<User>('create-user', user);
   }
+  deleteUser(id: string){
+    return this.api.delete<User>('delete-user', id);
+  }
 }

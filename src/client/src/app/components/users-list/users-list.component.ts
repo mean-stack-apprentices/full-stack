@@ -18,7 +18,11 @@ export class UsersListComponent implements OnInit {
   }
 
   getUsers() {
-    return this.userService.getUsers()
+    return this.userService.getUsers();
+  }
+
+  deleteUser(id:any){
+    this.userService.deleteUser(id).subscribe();
   }
 
 }
