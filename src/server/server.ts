@@ -1,9 +1,11 @@
+
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
-import mongoose from 'mongoose';
-import { UserModel } from './schemas/user.schema.js';
 import { PostModel } from './schemas/post.schema.js';
+import { UserModel } from './schemas/user.schema.js'
+import mongoose from 'mongoose';
+
 const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
@@ -18,7 +20,6 @@ mongoose.connect('mongodb://localhost:27017/test')
 
 app.use(cors());
 app.use(express.json());
-
 
 app.get('/', function(req, res) {
    res.json({message:'test'});
@@ -42,9 +43,10 @@ app.get('/users', function(req,res){
     })
 });
 app.post('/create-user', function(req,res){
-    const {name, email} = req.body;
+    const {name, email, username} = req.body;
     const user = new UserModel({
         name,
+        username,
         email,
     });
     user.save()
@@ -75,5 +77,5 @@ app.post('/create-post', function(req,res){
 
 
 app.listen(PORT, function(){
-    console.log( `starting at localhost http://localhost: ${PORT}`);
+    console.log( `starting at localhost http://localhost:${PORT}`);
 })
