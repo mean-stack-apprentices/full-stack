@@ -1,18 +1,22 @@
+
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
-import mongoose from 'mongoose';
-import { UserModel } from './schemas/user.schema.js'
 import { PostModel } from './schemas/post.schema.js';
-
-mongoose.connect('mongodb://localhost:27017/full-stack')
-.then(() => {
-    console.log('conneted to db')
-}).catch(err => console.log(err, 'error connecting to db'))
+import { UserModel } from './schemas/user.schema.js'
+import mongoose from 'mongoose';
 
 const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
+
+mongoose.connect('mongodb://localhost:27017/test')
+.then(() => {
+    console.log('Connected to DB Successfully');
+})
+.catch(err => console.log('Failed to Connect to DB', err))
+
+
 
 app.use(cors());
 app.use(express.json());
@@ -20,36 +24,57 @@ app.use(express.json());
 app.get('/', function(req, res) {
    res.json({message:'test'});
 });
-app.get('/users', function(req,res) {
-    UserModel.find().then(users => res.json(users))
-    .catch(err => {throw new Error ('server aint receive users')})
-});
-app.get('/posts', function(req, res) {
-    res.json({message: 'got /posts'})
-})
 
-app.post('/create-user', function(req,res) {
-    const newUser = new UserModel(req.body);
-    newUser.save(err => {
-        if (err) {
-            throw new Error('ouch.. newUser aint save:/')
-        } else {
-            console.log('new user added to users')
-        }
+app.get('/posts', function(req,res){
+    PostModel.find()
+    .then(data => res.json({data}))
+    .catch(err => {
+        res.status(501)
+        res.json({errors: err});
     })
-    res.json(req.body);
 });
-app.post('/create-post', function(req, res) {
-    const newPost =  new PostModel(req.body)
-    newPost.save(err => {
-        if (err) {
-            throw new Error('ouch.. newPost aint save :/')
-        } else {
-            console.log('new post');
-        }
+
+app.get('/users', function(req,res){
+    UserModel.find()
+    .then(users => res.json({data: users}))
+    .catch(err => {
+        res.status(501)
+        res.json({errors: err});
+    })
+});
+app.post('/create-user', function(req,res){
+    const {name, email, username} = req.body;
+    const user = new UserModel({
+        name,
+        username,
+        email,
     });
-    res.json(req.body);
-})
+    user.save()
+    .then((data) => {
+        res.json({data});
+    })
+    .catch(err => {
+        res.status(501);
+        res.json({errors: err});
+    })
+});
+
+app.post('/create-post', function(req,res){
+    const {title, body} = req.body;
+    const post = new PostModel({
+        title,
+        body,
+    });
+    post.save()
+    .then((data) => {
+        res.json({data});
+    })
+    .catch(err => {
+        res.status(501);
+        res.json({errors: err});
+    })
+});
+
 
 app.listen(PORT, function(){
     console.log( `starting at localhost http://localhost:${PORT}`);

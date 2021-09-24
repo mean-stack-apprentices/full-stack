@@ -4,6 +4,7 @@
     "src/shared/**/*"
   ],
   "exclude": [
+    "src/client/**/*",
     "node_modules/*",
     "public/*"
   ],
@@ -14,7 +15,7 @@
   "_version": "1.0.0",
   "compilerOptions": {
     "moduleResolution": "node",
-    "importsNotUsedAsValues": "error",
+    "importsNotUsedAsValues": "preserve",
     "sourceMap": true,
     "isolatedModules": false,
     "target": "ESNEXT",
