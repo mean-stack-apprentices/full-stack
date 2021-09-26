@@ -16,9 +16,20 @@ export class UsersListComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  deleteUser(id: any) {
+    this.userService.deleteUser(id).subscribe();
+  }
+
 
   getUsers() {
     return this.userService.getUsers()
+  }
+  updateUser(id:any) {
+  this.userService.updateUser(id)
+  }
+  checkUpdated(id: any) {
+    return this.userService.updatedUserId == id ? "red" : 'black';
+    
   }
 
 }

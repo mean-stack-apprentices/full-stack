@@ -6,6 +6,7 @@ import { Postable } from '../models/postable';
   providedIn: 'root'
 })
 export class ApiService {
+  
   baseUrl:string = 'http://localhost:3501/';
   constructor(private http: HttpClient) 
   { }
@@ -15,5 +16,11 @@ export class ApiService {
   }
   post<T>(resourceName: string, data: Postable) {
     return this.http.post<T>(this.baseUrl + resourceName, data);
+  }
+  delete<T>(resourceName: string, id: string) {
+    return this.http.delete<T>(this.baseUrl + resourceName + "/" + id);
+  }
+  put<T>(resourceName: string, data: Postable) {
+    return this.http.put<T>(this.baseUrl + resourceName, data);
   }
 }
