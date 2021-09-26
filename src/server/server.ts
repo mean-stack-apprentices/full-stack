@@ -82,6 +82,16 @@ app.delete('/delete-user/:id', function (req, res) {
     })
   })
 })
+app.put('/update-user/:id', function (req, res) {
+  const _id = req.params.id;
+  UserModel.findByIdAndUpdate(_id).then(data => {
+
+    $set: {username:req.body.username,  req.body.email}
+    res.json({
+      data
+    })
+  })
+})
 
 app.listen(PORT, function(){
     console.log( `starting at localhost http://localhost:${PORT}`);
