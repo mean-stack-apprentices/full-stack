@@ -57,7 +57,7 @@ app.post('/create-user', function(req,res){
         res.json({errors: err});
     })
 });
-app.post('/update-user', function(req,res){
+app.put('/update-user', function(req,res){
     const {_id, updatedName,} = req.body;
     UserModel.findByIdAndUpdate(_id, {$set: {name: updatedName}})
     .then((data) => {

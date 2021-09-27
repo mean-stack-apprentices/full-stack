@@ -17,7 +17,7 @@ export class UserService {
     return this.api.post<User>('create-user', user);
   }
   updateById(updatedName: UpdatedUserObj, ) {
-    return this.api.post<string>('update-user', updatedName)
+    return this.api.put<string>('update-user', updatedName)
   }
   deleteUser(id: any) {
     return this.api.delete<any>('delete-user/' + id);
