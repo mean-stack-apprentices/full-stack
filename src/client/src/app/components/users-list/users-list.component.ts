@@ -24,7 +24,7 @@ export class UsersListComponent implements OnInit {
   updateUsers(id: any, name:string) {
     return this.userService.updateById({_id: id, updatedName: name}).subscribe()
   }
-  deleteUser(id:any) {
+  deleteUser(id: any) {
     return this.userService.deleteUser(id).subscribe()
   }
 }

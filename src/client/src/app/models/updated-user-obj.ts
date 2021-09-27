@@ -1,4 +1,4 @@
 export interface UpdatedUserObj {
-    _id: any,
+    _id: string,
     updatedName: string,
 }
