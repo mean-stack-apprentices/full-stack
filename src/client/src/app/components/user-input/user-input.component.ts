@@ -22,6 +22,10 @@ export class UserInputComponent implements OnInit {
   ngOnInit(): void {
   }
   
+  get isUserSelected() {
+    return this.userService.selectedUserId;
+  }
+
   postUser() {
     console.log(this.addUser.value, 'trying to post user')
     this.userService.postUsers(this.addUser.value).subscribe();
