@@ -1,4 +1,3 @@
-
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -9,8 +8,8 @@ import mongoose from 'mongoose';
 const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
+mongoose.connect('mongodb://localhost:27017/full-stack')
 
-mongoose.connect('mongodb://localhost:27017/test')
 .then(() => {
     console.log('Connected to DB Successfully');
 })
@@ -55,6 +54,25 @@ app.post('/create-user', function(req,res){
     })
     .catch(err => {
         res.status(501);
+        res.json({errors: err});
+    })
+});
+app.put('/update-user', function(req,res){
+    const {_id, updatedName,} = req.body;
+    UserModel.findByIdAndUpdate(_id, {$set: {name: updatedName}})
+    .then((data) => {
+        res.json({data});
+    })
+    .catch(err => {
+        res.status(501);
+        res.json({errors: err});
+    })
+});
+app.delete('/delete-user/:id', function(req,res){
+    UserModel.findByIdAndDelete(req.params.id)
+    .then(data => res.json(data))
+    .catch(err => {
+        res.status(501)
         res.json({errors: err});
     })
 });
