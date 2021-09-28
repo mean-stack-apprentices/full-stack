@@ -24,6 +24,8 @@ export class UserInputComponent implements OnInit {
   
   postUser() {
     console.log(this.addUser.value, 'trying to post user')
-    return this.userService.postUsers(this.addUser.value).subscribe()
+    this.userService.postUsers(this.addUser.value).subscribe();
+    console.log(this.addUser.value , 'is successfully added');
+    this.addUser.reset();
   }
 }
