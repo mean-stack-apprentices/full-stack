@@ -75,6 +75,34 @@ app.post('/create-post', function(req,res){
     })
 });
 
+app.delete('/delete-user/:id', function(req, res) {
+    const _id = req.params.id;
+    UserModel.findByIdAndDelete(_id).then((data) => {
+        res.json({data});
+    });
+})
+
+app.put('/update-user/:id', function(req, res) {
+    console.log("Update user");
+    UserModel.findByIdAndUpdate(
+        req.params.id,
+        {
+            $set: { name: req.body.name, username: req.body.username },
+        },
+        {
+            new: true,
+        },
+        function(err, updateUser) {
+            if(err) {
+                res.send("Error updating user");
+            }
+            else{
+                res.json(updateUser);
+            }
+        }
+    )
+})
+
 
 app.listen(PORT, function(){
     console.log( `starting at localhost http://localhost:${PORT}`);

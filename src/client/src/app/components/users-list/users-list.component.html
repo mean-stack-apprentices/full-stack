@@ -1,6 +1,10 @@
-<ul>
-    <li *ngFor='let user of (users$ | async)'>
-        name: {{user.name}}<br>
-        username: {{user.username}}
+<ol>
+    <li [ngStyle]= "{ color: checkSelected(user._id) }" *ngFor='let user of (users$ | async)'>
+        name: {{user.name}} <br>
+        username: {{user.username}} 
+        {{user._id}} 
+        <button (click) = "deleteUser(user._id, user.name)">Delete</button>
+        <button (click) = "selectUser(user._id)">Select & Update</button>
+        <br> <br> 
     </li>
-</ul>
+</ol>
