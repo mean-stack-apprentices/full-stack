@@ -18,5 +18,5 @@ export const loadUsersFailure = createAction(
 
 export const selectUserAction = createAction(
   '[User] Select User',
-  props<{ data: User }>()
+  props<{ data: User | null }>()
 );

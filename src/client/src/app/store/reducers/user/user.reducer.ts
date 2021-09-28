@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { User } from '../../../../../../shared/models/user.model';
-import { loadUsers, loadUsersSuccess } from '../../actions/user/user.actions';
+import { loadUsers, loadUsersSuccess, selectUserAction } from '../../actions/user/user.actions';
 
 
 export const userFeatureKey = 'user';
@@ -14,14 +14,16 @@ export interface State {
 export const initialState: State = {
   users: [],
   selectedUser: null,
-
 };
 
 
 export const reducer = createReducer(
   initialState,
   on(loadUsersSuccess, (state, action) => {
-    return {...state, users: action.data}
-  })
+    return { ...state, users: action.data }
+  }),
+  on(selectUserAction, (state, action) => {
+    return { ...state, selectedUser: action.data }
+  }),
 );
 

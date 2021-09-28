@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import { AppState } from 'src/app/store';
 import { loadUsers, selectUserAction } from 'src/app/store/actions/user/user.actions';
-import { usersSelector } from 'src/app/store/selectors/user/user.selectors';
+import { selectedUserSelector, usersSelector } from 'src/app/store/selectors/user/user.selectors';
 import { User } from '../../../../../shared/models/user.model';
 
 @Component({
@@ -13,12 +14,16 @@ import { User } from '../../../../../shared/models/user.model';
   styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent implements OnInit {
-  users$: Observable<User[]>
+
+  @Input() public users: User[] = [];
+  @Input() public selectedUser: User | null = null;
+
   constructor(
     private userService: UserService,
     private store: Store<AppState>,
     ) {
-    this.users$ = this.store.select(usersSelector);
+
+
   }
 
   ngOnInit(): void {
@@ -26,17 +31,22 @@ export class UsersListComponent implements OnInit {
   }
 
 
+
   deleteUser(id: any, name: string) {
     this.userService.deleteUser(id).subscribe();
     console.log(`user '${name}' deleted successfully`);
   }
 
-  selectUser(user: User) {
-    this.store.dispatch(selectUserAction({data: user}))
+  selectUser(user: User, selectedUser: User | null) {
+    this.store.dispatch(selectUserAction({data: this.isSelected(selectedUser, user) ?  null : user}))
   }
 
-  checkSelected(id: any) {
-    return this.userService.selectedUserId == id? 'green' : 'black'
+  checkSelected(selectedUser: User | null, user: User) {
+    return this.isSelected(selectedUser, user) ? 'green' : 'black';
+  }
+
+  isSelected(selectedUser: User | null, user: User) {
+    return selectedUser?._id === user._id;
   }
 
 }

@@ -13,12 +13,14 @@ import { environment } from '../environments/environment';
 import * as fromUser from './store/reducers/user/user.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './store/effects/user/user.effects';
+import { PageUsersComponent } from './pages/page-users/page-users.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersListComponent,
-    UserInputComponent
+    UserInputComponent,
+    PageUsersComponent
   ],
   imports: [
     BrowserModule,
