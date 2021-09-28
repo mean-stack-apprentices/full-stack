@@ -19,4 +19,7 @@ export class ApiService {
   delete<T>(resourceName: string, id:string){
     return this.http.delete<T>(this.baseUrl + resourceName + '/' + id);
   }
+  update<T>(resourceName: string, data:Postable){
+    return this.http.put<T>(this.baseUrl + resourceName , data);
+  }
 }

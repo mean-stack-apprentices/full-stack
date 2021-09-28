@@ -83,6 +83,24 @@ app.delete('/delete-user/:id', function(req,res){
     })
 })
 
+app.patch('/update-user/:id', function (req,res){
+    const _id= req.params.id;   
+    UserModel.findByIdAndUpdate(
+        req.params.id, {
+            $set: {name: req.body.name, username: req.body.username},
+        },
+        {
+            new: true,
+        },
+        function (err, updateUser) {
+            if (err){
+                res.send("Erro updating user");
+            }else {
+                res.json(updateUser);
+            }
+        }
+    );
+});
 
 app.listen(PORT, function(){
     console.log( `starting at localhost http://localhost:${PORT}`);

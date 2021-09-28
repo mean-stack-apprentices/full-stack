@@ -25,4 +25,12 @@ export class UsersListComponent implements OnInit {
     this.userService.deleteUser(id).subscribe();
   }
 
+  selectUser(id: any){
+    this.userService.selectUser(id);
+  }
+  
+  checkSelected(id:any){
+    return this.userService.selectedUserId == id ? "green" : "black"
+  }
+
 }
