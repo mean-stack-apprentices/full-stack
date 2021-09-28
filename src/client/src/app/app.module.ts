@@ -18,7 +18,6 @@ import { UserEffects } from './store/effects/user/user.effects';
 @NgModule({
   declarations: [
     AppComponent,
-    UsersListComponent,
     UserInputComponent
   ],
   imports: [
