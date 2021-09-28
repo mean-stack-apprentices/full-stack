@@ -11,6 +11,8 @@ import { reducers, metaReducers } from './store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import * as fromUser from './store/reducers/user/user.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { UserEffects } from './store/effects/user/user.effects';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import * as fromUser from './store/reducers/user/user.reducer';
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
+    EffectsModule.forRoot([UserEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]

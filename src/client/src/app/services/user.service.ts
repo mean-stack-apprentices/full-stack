@@ -20,9 +20,9 @@ export class UserService {
       console.log('trying to UPDATE user.......');
       return this.api.put<User>('update-user/' + this.selectedUserId, user);
     }
-    else 
+    else
       return this.api.post<User>('create-user', user);
-    // return this.selectedUserId ? 
+    // return this.selectedUserId ?
     // this.api.put<User>('update-user/' + this.selectedUserId, user) :
     // this.api.post<User>('create-user', user);
   }
