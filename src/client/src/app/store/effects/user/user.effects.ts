@@ -7,6 +7,9 @@ import {
   loadUsers,
   loadUsersFailure,
   loadUsersSuccess,
+  updateUser,
+  updateUserFailure,
+  updateUserSuccess,
 } from '../../actions/user/user.actions';
 
 @Injectable()
@@ -22,6 +25,18 @@ export class UserEffects {
       )
     )
   );
+
+  updateUsers$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(updateUser),
+    mergeMap((action) =>
+      this.userService.updateUser(action.data).pipe(
+        map((data) => updateUserSuccess({ data })),
+        catchError((error) => of(updateUserFailure({ error })))
+      )
+    )
+  )
+);
 
   constructor(private actions$: Actions, private userService: UserService) {}
 }

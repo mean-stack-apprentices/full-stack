@@ -1,5 +1,5 @@
 <form [formGroup] = 'addUser'>
     <input type="text" formControlName='name' placeholder="name">
     <input type="text" formControlName='username' placeholder="username">
-    <button (click)='postUser()' [disabled]='addUser.invalid'>{{(selectedUser) ? 'Update User' : 'Add User'}}</button>
+    <button (click)='postUser(selectedUser)' [disabled]='addUser.invalid'>{{(selectedUser) ? 'Update User' : 'Add User'}}</button>
 </form>

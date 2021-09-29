@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { AppState } from 'src/app/store';
+import { updateUser } from 'src/app/store/actions/user/user.actions';
 import { selectedUserSelector } from 'src/app/store/selectors/user/user.selectors';
 import { User } from '../../../../../shared/models/user.model';
 
@@ -42,10 +43,8 @@ export class UserInputComponent implements OnInit, OnChanges {
   }
 
 
-  postUser() {
-    console.log(this.addUser.value, 'trying to post user')
-    this.userService.postUsers(this.addUser.value).subscribe();
-    console.log(this.addUser.value , 'is successfully added');
+  postUser(selectedUser: User | null) {
+    this.store.dispatch(updateUser({data: {...selectedUser, ...this.addUser.value}}))
     this.addUser.reset();
   }
 }
