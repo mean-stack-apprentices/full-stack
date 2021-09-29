@@ -23,6 +23,7 @@ export class UserInputComponent implements OnInit, OnChanges {
   ) {
     this.addUser = this.fb.group({
       name: ['',Validators.required],
+      email: ['',Validators.compose([Validators.required, Validators.minLength(3),])],
       username: ['',Validators.compose([Validators.required, Validators.minLength(3),])],
     })
 
@@ -36,7 +37,8 @@ export class UserInputComponent implements OnInit, OnChanges {
     if (changes?.selectedUser?.currentValue) {
       const user = changes?.selectedUser?.currentValue;
       this.addUser.get('name')?.setValue(user.name);
-      this.addUser.get('username')?.setValue(user.email);
+      this.addUser.get('email')?.setValue(user.email);
+      this.addUser.get('username')?.setValue(user.username);
       this.addUser.updateValueAndValidity();
 
     }
