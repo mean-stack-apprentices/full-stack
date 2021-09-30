@@ -15,20 +15,15 @@ export class UserService {
   getUsers() {
     return this.api.get<{ data: User[] }>('users').pipe(map(res => res.data));
   }
-  postUsers(user: User) {
-    if(this.selectedUserId) {
-      console.log('trying to UPDATE user.......');
-      return this.api.put<User>('update-user/' + this.selectedUserId, user);
-    }
-    else 
-      return this.api.post<User>('create-user', user);
-    // return this.selectedUserId ? 
-    // this.api.put<User>('update-user/' + this.selectedUserId, user) :
-    // this.api.post<User>('create-user', user);
+  createUser(user: User) {
+      return this.api.post<{data: User}>('create-user', user).pipe(map(res => res.data));
+  }
+  updateUser(user: User) {
+      return this.api.put<User>('update-user/' + user._id, user);
   }
 
-  deleteUser(id: string) {
-    return this.api.delete<User>('delete-user/' + id);
+  deleteUser(user: User) {
+    return this.api.delete<{data: User}>('delete-user/' + user._id).pipe(map(res => res.data));
   }
 
   selectUser(id: string) {
