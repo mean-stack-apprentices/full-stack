@@ -4,6 +4,12 @@ import { EMPTY, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import {
+  createUser,
+  createUserFailure,
+  createUserSuccess,
+  deleteUser,
+  deleteUserFailure,
+  deleteUserSuccess,
   loadUsers,
   loadUsersFailure,
   loadUsersSuccess,
@@ -27,16 +33,40 @@ export class UserEffects {
   );
 
   updateUsers$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(updateUser),
-    mergeMap((action) =>
-      this.userService.updateUser(action.data).pipe(
-        map((data) => updateUserSuccess({ data })),
-        catchError((error) => of(updateUserFailure({ error })))
+    this.actions$.pipe(
+      ofType(updateUser),
+      mergeMap((action) =>
+        this.userService.updateUser(action.data).pipe(
+          map((data) => updateUserSuccess({ data })),
+          catchError((error) => of(updateUserFailure({ error })))
+        )
       )
     )
-  )
-);
+  );
+
+  createUsers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createUser),
+      mergeMap((action) =>
+        this.userService.createUser(action.data).pipe(
+          map((data) => createUserSuccess({ data })),
+          catchError((error) => of(createUserFailure({ error })))
+        )
+      )
+    )
+  );
+
+  deleteUsers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteUser),
+      mergeMap((action) =>
+        this.userService.deleteUser(action.data).pipe(
+          map((data) => deleteUserSuccess({ data })),
+          catchError((error) => of(deleteUserFailure({ error })))
+        )
+      )
+    )
+  );
 
   constructor(private actions$: Actions, private userService: UserService) {}
 }

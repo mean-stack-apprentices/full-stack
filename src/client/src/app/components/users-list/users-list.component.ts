@@ -4,7 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import { AppState } from 'src/app/store';
-import { loadUsers, selectUserAction } from 'src/app/store/actions/user/user.actions';
+import { deleteUser, loadUsers, selectUserAction } from 'src/app/store/actions/user/user.actions';
 import { selectedUserSelector, usersSelector } from 'src/app/store/selectors/user/user.selectors';
 import { User } from '../../../../../shared/models/user.model';
 
@@ -32,9 +32,9 @@ export class UsersListComponent implements OnInit {
 
 
 
-  deleteUser(id: any, name: string) {
-    this.userService.deleteUser(id).subscribe();
-    console.log(`user '${name}' deleted successfully`);
+  deleteUser(user: User) {
+    this.store.dispatch(deleteUser({data: user}))
+    console.log(`user '${user.name}' deleted successfully`);
   }
 
   selectUser(user: User, selectedUser: User | null) {

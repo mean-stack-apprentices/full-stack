@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { User } from '../../../../../../shared/models/user.model';
-import { loadUsers, loadUsersSuccess, selectUserAction, updateUserSuccess } from '../../actions/user/user.actions';
+import { createUserSuccess, deleteUserSuccess, loadUsers, loadUsersSuccess, selectUserAction, updateUserSuccess } from '../../actions/user/user.actions';
 
 
 export const userFeatureKey = 'user';
@@ -27,6 +27,14 @@ export const reducer = createReducer(
   }),
   on(updateUserSuccess, (state, action) => {
     return {...state, users: state.users.map(user => user._id === action.data._id ? action.data : user)}
+  }),
+  on(deleteUserSuccess, (state, action) => {
+    return {...state, users: state.users.filter(user => user._id !== action.data._id)}
+  }),
+  on(createUserSuccess, (state, action) => {
+    const users = [...state.users];
+    users.push(action.data);
+    return {...state, users}
   })
 );
 

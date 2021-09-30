@@ -36,7 +36,7 @@ app.get('/posts', function(req,res){
 
 app.get('/users', function(req,res){
     UserModel.find()
-    .then(users => res.json({data: users}))
+    .then(data => res.json({data}))
     .catch(err => {
         res.status(501)
         res.json({errors: err});
@@ -78,6 +78,7 @@ app.post('/create-post', function(req,res){
 app.delete('/delete-user/:id', function(req, res) {
     const _id = req.params.id;
     UserModel.findByIdAndDelete(_id).then((data) => {
+        console.log(data);
         res.json({data});
     });
 })
