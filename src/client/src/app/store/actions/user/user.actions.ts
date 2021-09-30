@@ -1,3 +1,4 @@
+import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
 import { Error } from 'mongoose';
 import { User } from '../../../../../../shared/models/user.model';
@@ -43,7 +44,7 @@ export const updateUser = createAction(
 
 export const updateUserSuccess = createAction(
   '[User] Update User Success',
-  props<{ data: User }>()
+  props<{ data: Update<User> }>()
 );
 
 export const updateUserFailure = createAction(

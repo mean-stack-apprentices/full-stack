@@ -88,17 +88,17 @@ app.put('/update-user/:id', function(req, res) {
     UserModel.findByIdAndUpdate(
         req.params.id,
         {
-            $set: { name: req.body.name, email: req.body.email },
+            $set: { name: req.body.name, email: req.body.email, username: req.body.username },
         },
         {
             new: true,
         },
-        function(err, updateUser) {
-            if(err) {
-                res.send("Error updating user");
+        function(error, data) {
+            if(error) {
+                res.status(501).json({error});
             }
             else{
-                res.json(updateUser);
+                res.json({data});
             }
         }
     )
