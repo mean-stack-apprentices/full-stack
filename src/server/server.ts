@@ -10,7 +10,7 @@ const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
 
-mongoose.connect('mongodb://localhost:27017/test')
+mongoose.connect('mongodb://localhost:27017/full-stack')
 .then(() => {
     console.log('Connected to DB Successfully');
 })
